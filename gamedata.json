@@ -1,0 +1,44 @@
+{
+  "rooms": {
+    "1": {
+      "password": "876543",
+      "digits": 6,
+      "teamName": "",
+      "startTime": null,
+      "completed": false,
+      "isActive": false,
+      "penalties": 0,
+      "screamEnabled": false
+    },
+    "2": {
+      "password": "5678",
+      "digits": 4,
+      "teamName": "",
+      "startTime": null,
+      "completed": false,
+      "isActive": false,
+      "penalties": 0,
+      "screamEnabled": false
+    },
+    "3": {
+      "password": "9012",
+      "digits": 4,
+      "teamName": "",
+      "startTime": null,
+      "completed": false,
+      "isActive": false,
+      "penalties": 0
+    },
+    "4": {
+      "password": "3456",
+      "digits": 4,
+      "teamName": "test",
+      "startTime": 1765805786651,
+      "completed": false,
+      "isActive": true,
+      "penalties": 0,
+      "screamEnabled": false
+    }
+  },
+  "completedTeams": []
+}
