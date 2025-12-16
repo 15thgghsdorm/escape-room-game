@@ -31,21 +31,12 @@ mongoose.connect(MONGODB_URI)
     .then(() => console.log('MongoDB connected successfully'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-// MongoDB 스키마 정의
+// MongoDB 스키마 정의 (Map 대신 Mixed 사용)
 const GameStateSchema = new mongoose.Schema({
     stateId: { type: String, default: 'main' },
     rooms: {
-        type: Map,
-        of: {
-            password: String,
-            digits: Number,
-            teamName: String,
-            startTime: Number,
-            completed: Boolean,
-            isActive: Boolean,
-            penalties: Number,
-            screamEnabled: Boolean
-        }
+        type: mongoose.Schema.Types.Mixed,
+        default: {}
     },
     completedTeams: [{
         teamName: String,
@@ -59,16 +50,12 @@ const GameStateSchema = new mongoose.Schema({
 
 const GameState = mongoose.model('GameState', GameStateSchema);
 
-// 초기 게임 상태
-const defaultGameState = {
-    stateId: 'main',
-    rooms: new Map([
-        [1, { password: '1234', digits: 4, teamName: '', startTime: null, completed: false, isActive: false, penalties: 0, screamEnabled: true }],
-        [2, { password: '5678', digits: 4, teamName: '', startTime: null, completed: false, isActive: false, penalties: 0, screamEnabled: true }],
-        [3, { password: '9012', digits: 4, teamName: '', startTime: null, completed: false, isActive: false, penalties: 0, screamEnabled: true }],
-        [4, { password: '3456', digits: 4, teamName: '', startTime: null, completed: false, isActive: false, penalties: 0, screamEnabled: true }]
-    ]),
-    completedTeams: []
+// 초기 게임 상태 (일반 객체로 정의)
+const defaultRooms = {
+    1: { password: '1234', digits: 4, teamName: '', startTime: null, completed: false, isActive: false, penalties: 0, screamEnabled: true },
+    2: { password: '5678', digits: 4, teamName: '', startTime: null, completed: false, isActive: false, penalties: 0, screamEnabled: true },
+    3: { password: '9012', digits: 4, teamName: '', startTime: null, completed: false, isActive: false, penalties: 0, screamEnabled: true },
+    4: { password: '3456', digits: 4, teamName: '', startTime: null, completed: false, isActive: false, penalties: 0, screamEnabled: true }
 };
 
 // 게임 상태 로드
@@ -76,7 +63,11 @@ async function loadGameState() {
     try {
         let state = await GameState.findOne({ stateId: 'main' });
         if (!state) {
-            state = new GameState(defaultGameState);
+            state = new GameState({
+                stateId: 'main',
+                rooms: defaultRooms,
+                completedTeams: []
+            });
             await state.save();
             console.log('Created new game state in MongoDB');
         } else {
@@ -85,7 +76,15 @@ async function loadGameState() {
         return state;
     } catch (error) {
         console.error('Error loading game state:', error);
-        return defaultGameState;
+        // 오류 발생 시 기본 상태 반환
+        return {
+            stateId: 'main',
+            rooms: defaultRooms,
+            completedTeams: [],
+            save: async function() {
+                console.log('Using fallback save');
+            }
+        };
     }
 }
 
@@ -95,7 +94,12 @@ async function saveGameState(state) {
         state.updatedAt = new Date();
         await GameState.findOneAndUpdate(
             { stateId: 'main' },
-            state,
+            {
+                stateId: state.stateId,
+                rooms: state.rooms,
+                completedTeams: state.completedTeams,
+                updatedAt: state.updatedAt
+            },
             { upsert: true, new: true }
         );
         console.log('Game state saved to MongoDB');
@@ -108,7 +112,7 @@ async function saveGameState(state) {
 async function broadcastGameState() {
     const state = await loadGameState();
     const stateObj = {
-        rooms: Object.fromEntries(state.rooms),
+        rooms: state.rooms,
         completedTeams: state.completedTeams
     };
     io.to('admin').emit('game-state', stateObj);
@@ -131,7 +135,7 @@ io.on('connection', (socket) => {
             gameState = await loadGameState();
         }
         const stateObj = {
-            rooms: Object.fromEntries(gameState.rooms),
+            rooms: gameState.rooms,
             completedTeams: gameState.completedTeams
         };
         socket.emit('game-state', stateObj);
@@ -144,7 +148,7 @@ io.on('connection', (socket) => {
         
         // 최신 상태 로드
         gameState = await loadGameState();
-        const room = gameState.rooms.get(roomNumber);
+        const room = gameState.rooms[roomNumber];
         
         socket.emit('room-config', {
             roomNumber: roomNumber,
@@ -159,7 +163,7 @@ io.on('connection', (socket) => {
         
         // 최신 상태 로드
         gameState = await loadGameState();
-        const room = gameState.rooms.get(roomNumber);
+        const room = gameState.rooms[roomNumber];
         
         room.teamName = teamName;
         room.startTime = Date.now();
@@ -184,7 +188,7 @@ io.on('connection', (socket) => {
         
         // 최신 상태 로드
         gameState = await loadGameState();
-        const room = gameState.rooms.get(roomNumber);
+        const room = gameState.rooms[roomNumber];
 
         console.log(`Room ${roomNumber} password check:`, password, 'vs', room.password);
 
@@ -228,7 +232,7 @@ io.on('connection', (socket) => {
 
         // 최신 상태 로드
         gameState = await loadGameState();
-        const room = gameState.rooms.get(roomNumber);
+        const room = gameState.rooms[roomNumber];
         
         room.password = password;
         room.digits = digits;
@@ -250,7 +254,7 @@ io.on('connection', (socket) => {
         
         // 최신 상태 로드
         gameState = await loadGameState();
-        const room = gameState.rooms.get(roomNumber);
+        const room = gameState.rooms[roomNumber];
         
         room.screamEnabled = enabled;
 
@@ -270,7 +274,7 @@ io.on('connection', (socket) => {
     socket.on('admin-reset-room', async (roomNumber) => {
         // 최신 상태 로드
         gameState = await loadGameState();
-        const room = gameState.rooms.get(roomNumber);
+        const room = gameState.rooms[roomNumber];
         
         room.teamName = '';
         room.startTime = null;
@@ -321,7 +325,7 @@ io.on('connection', (socket) => {
 
         if (clientCount <= 1) {
             gameState = await loadGameState();
-            const room = gameState.rooms.get(roomNumber);
+            const room = gameState.rooms[roomNumber];
             
             if (room.isActive && !room.completed) {
                 room.teamName = '';
@@ -352,9 +356,9 @@ io.on('connection', (socket) => {
                 console.log(`After disconnect, room ${roomNumber} has ${clientCount} clients`);
 
                 gameState = await loadGameState();
-                const room = gameState.rooms.get(roomNumber);
+                const room = gameState.rooms[roomNumber];
                 
-                if (clientCount === 0 && room.isActive && !room.completed) {
+                if (clientCount === 0 && room && room.isActive && !room.completed) {
                     room.teamName = '';
                     room.startTime = null;
                     room.isActive = false;
