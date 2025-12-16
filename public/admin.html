@@ -1,244 +1,247 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>방탈출 관리자</title>
-  <link rel="stylesheet" href="admin.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>방탈출 관리자</title>
+    <link rel="stylesheet" href="admin.css">
 </head>
+
 <body>
-  <div class="container">
-    <h1>🎮 공포 방탈출 관리자</h1>
-    
-    <div class="rooms-grid">
-      <div class="room-card" data-room="1">
-        <h2>폐병원</h2>
-        <div class="room-status">
-          <div class="status-badge inactive">대기중</div>
-          <div class="team-name">-</div>
-          <div class="elapsed-time">00:00:00</div>
-          <div class="penalty-info">패널티: 0회 (+0초)</div>
-        </div>
-        <div class="room-controls">
-          <div class="password-setting">
-            <label>비밀번호:</label>
-            <input type="text" class="password-input" data-room="1" placeholder="비밀번호">
-            <label>자릿수:</label>
-            <input type="number" class="digits-input" data-room="1" value="4" min="1" max="10">
-            <button onclick="setPassword(1)">설정</button>
-          </div>
-          
-          <div class="announcement-section">
-            <label>안내 방송:</label>
-            <div class="announcement-buttons">
-              <button onclick="playAnnouncement(1, 'start')">🎬 시작 안내</button>
-              <button onclick="playAnnouncement(1, '10min')">⏰ 10분 전</button>
-              <button onclick="playAnnouncement(1, '5min')">⏰ 5분 전</button>
-              <button onclick="playAnnouncement(1, 'end')">🏁 종료 안내</button>
-              <button onclick="playAnnouncement(1, 'other1')">📢 기타1</button>
-              <button onclick="playAnnouncement(1, 'other2')">📢 기타2</button>
-            </div>
-          </div>
-          
-          <div class="hint-section">
-            <input type="text" class="hint-input" data-room="1" placeholder="힌트 입력">
-            <button onclick="sendHint(1)">힌트 전송</button>
-          </div>
-          <div class="sound-control">
-            <label>
-              <input type="checkbox" class="scream-toggle" data-room="1" checked>
-              비명 소리 활성화
-            </label>
-          </div>
-          <div class="effect-buttons">
-            <button onclick="sendEffect(1, 'flash')">⚡ 깜박임</button>
-            <button onclick="sendEffect(1, 'shake')">💥 흔들림</button>
-            <button onclick="sendEffect(1, 'scream')">😱 비명</button>
-            <button onclick="sendEffect(1, 'bloodDrip')">🩸 피</button>
-          </div>
-          <button class="reset-btn" onclick="resetRoom(1)">🔄 리셋</button>
-        </div>
-      </div>
+    <div class="container">
+        <h1>🎮 공포 방탈출 관리자</h1>
 
-      <div class="room-card" data-room="2">
-        <h2>크리스마스 악몽</h2>
-        <div class="room-status">
-          <div class="status-badge inactive">대기중</div>
-          <div class="team-name">-</div>
-          <div class="elapsed-time">00:00:00</div>
-          <div class="penalty-info">패널티: 0회 (+0초)</div>
-        </div>
-        <div class="room-controls">
-          <div class="password-setting">
-            <label>비밀번호:</label>
-            <input type="text" class="password-input" data-room="2" placeholder="비밀번호">
-            <label>자릿수:</label>
-            <input type="number" class="digits-input" data-room="2" value="4" min="1" max="10">
-            <button onclick="setPassword(2)">설정</button>
-          </div>
-          
-          <div class="announcement-section">
-            <label>안내 방송:</label>
-            <div class="announcement-buttons">
-              <button onclick="playAnnouncement(2, 'start')">🎬 시작 안내</button>
-              <button onclick="playAnnouncement(2, '10min')">⏰ 10분 전</button>
-              <button onclick="playAnnouncement(2, '5min')">⏰ 5분 전</button>
-              <button onclick="playAnnouncement(2, 'end')">🏁 종료 안내</button>
-              <button onclick="playAnnouncement(2, 'other1')">📢 기타1</button>
-              <button onclick="playAnnouncement(2, 'other2')">📢 기타2</button>
-            </div>
-          </div>
-          
-          <div class="hint-section">
-            <input type="text" class="hint-input" data-room="2" placeholder="힌트 입력">
-            <button onclick="sendHint(2)">힌트 전송</button>
-          </div>
-          <div class="sound-control">
-            <label>
-              <input type="checkbox" class="scream-toggle" data-room="2" checked>
-              비명 소리 활성화
-            </label>
-          </div>
-          <div class="effect-buttons">
-            <button onclick="sendEffect(2, 'flash')">⚡ 깜박임</button>
-            <button onclick="sendEffect(2, 'shake')">💥 흔들림</button>
-            <button onclick="sendEffect(2, 'scream')">😱 비명</button>
-            <button onclick="sendEffect(2, 'bloodDrip')">🩸 피</button>
-          </div>
-          <button class="reset-btn" onclick="resetRoom(2)">🔄 리셋</button>
-        </div>
-      </div>
+        <div class="rooms-grid">
+            <div class="room-card" data-room="1">
+                <h2>폐병원</h2>
+                <div class="room-status">
+                    <div class="status-badge inactive">대기중</div>
+                    <div class="team-name">-</div>
+                    <div class="elapsed-time">00:00:00</div>
+                    <div class="penalty-info">패널티: 0회 (+0초)</div>
+                </div>
+                <div class="room-controls">
+                    <div class="password-setting">
+                        <label>비밀번호:</label>
+                        <input type="text" class="password-input" data-room="1" placeholder="비밀번호">
+                        <label>자릿수:</label>
+                        <input type="number" class="digits-input" data-room="1" value="4" min="1" max="10">
+                        <button onclick="setPassword(1)">설정</button>
+                    </div>
 
-      <div class="room-card" data-room="3">
-        <h2>호텔</h2>
-        <div class="room-status">
-          <div class="status-badge inactive">대기중</div>
-          <div class="team-name">-</div>
-          <div class="elapsed-time">00:00:00</div>
-          <div class="penalty-info">패널티: 0회 (+0초)</div>
-        </div>
-        <div class="room-controls">
-          <div class="password-setting">
-            <label>비밀번호:</label>
-            <input type="text" class="password-input" data-room="3" placeholder="비밀번호">
-            <label>자릿수:</label>
-            <input type="number" class="digits-input" data-room="3" value="4" min="1" max="10">
-            <button onclick="setPassword(3)">설정</button>
-          </div>
-          
-          <div class="announcement-section">
-            <label>안내 방송:</label>
-            <div class="announcement-buttons">
-              <button onclick="playAnnouncement(3, 'start')">🎬 시작 안내</button>
-              <button onclick="playAnnouncement(3, '10min')">⏰ 10분 전</button>
-              <button onclick="playAnnouncement(3, '5min')">⏰ 5분 전</button>
-              <button onclick="playAnnouncement(3, 'end')">🏁 종료 안내</button>
-              <button onclick="playAnnouncement(3, 'other1')">📢 기타1</button>
-              <button onclick="playAnnouncement(3, 'other2')">📢 기타2</button>
-            </div>
-          </div>
-          
-          <div class="hint-section">
-            <input type="text" class="hint-input" data-room="3" placeholder="힌트 입력">
-            <button onclick="sendHint(3)">힌트 전송</button>
-          </div>
-          <div class="sound-control">
-            <label>
-              <input type="checkbox" class="scream-toggle" data-room="3" checked>
-              비명 소리 활성화
-            </label>
-          </div>
-          <div class="effect-buttons">
-            <button onclick="sendEffect(3, 'flash')">⚡ 깜박임</button>
-            <button onclick="sendEffect(3, 'shake')">💥 흔들림</button>
-            <button onclick="sendEffect(3, 'scream')">😱 비명</button>
-            <button onclick="sendEffect(3, 'bloodDrip')">🩸 피</button>
-          </div>
-          <button class="reset-btn" onclick="resetRoom(3)">🔄 리셋</button>
-        </div>
-      </div>
+                    <div class="announcement-section">
+                        <label>안내 방송:</label>
+                        <div class="announcement-buttons">
+                            <button onclick="playAnnouncement(1, 'start')">🎬 시작 안내</button>
+                            <button onclick="playAnnouncement(1, '10min')">⏰ 10분 전</button>
+                            <button onclick="playAnnouncement(1, '5min')">⏰ 5분 전</button>
+                            <button onclick="playAnnouncement(1, 'end')">🏁 종료 안내</button>
+                            <button onclick="playAnnouncement(1, 'other1')">📢 기타1</button>
+                            <button onclick="playAnnouncement(1, 'other2')">📢 기타2</button>
+                        </div>
+                    </div>
 
-      <div class="room-card" data-room="4">
-        <h2>대기실</h2>
-        <div class="room-status">
-          <div class="status-badge inactive">대기중</div>
-          <div class="team-name">-</div>
-          <div class="elapsed-time">00:00:00</div>
-          <div class="penalty-info">패널티: 0회 (+0초)</div>
-        </div>
-        <div class="room-controls">
-          <div class="password-setting">
-            <label>비밀번호:</label>
-            <input type="text" class="password-input" data-room="4" placeholder="비밀번호">
-            <label>자릿수:</label>
-            <input type="number" class="digits-input" data-room="4" value="4" min="1" max="10">
-            <button onclick="setPassword(4)">설정</button>
-          </div>
-          
-          <div class="announcement-section">
-            <label>안내 방송:</label>
-            <div class="announcement-buttons">
-              <button onclick="playAnnouncement(4, 'start')">🎬 시작 안내</button>
-              <button onclick="playAnnouncement(4, '10min')">⏰ 10분 전</button>
-              <button onclick="playAnnouncement(4, '5min')">⏰ 5분 전</button>
-              <button onclick="playAnnouncement(4, 'end')">🏁 종료 안내</button>
-              <button onclick="playAnnouncement(4, 'other1')">📢 기타1</button>
-              <button onclick="playAnnouncement(4, 'other2')">📢 기타2</button>
+                    <div class="hint-section">
+                        <input type="text" class="hint-input" data-room="1" placeholder="힌트 입력">
+                        <button onclick="sendHint(1)">힌트 전송</button>
+                    </div>
+                    <div class="sound-control">
+                        <label>
+                            <input type="checkbox" class="scream-toggle" data-room="1" checked>
+                            비명 소리 활성화
+                        </label>
+                    </div>
+                    <div class="effect-buttons">
+                        <button onclick="sendEffect(1, 'flash')">⚡ 깜박임</button>
+                        <button onclick="sendEffect(1, 'shake')">💥 흔들림</button>
+                        <button onclick="sendEffect(1, 'scream')">😱 비명</button>
+                        <button onclick="sendEffect(1, 'bloodDrip')">🩸 피</button>
+                    </div>
+                    <button class="reset-btn" onclick="resetRoom(1)">🔄 리셋</button>
+                </div>
             </div>
-          </div>
-          
-          <div class="hint-section">
-            <input type="text" class="hint-input" data-room="4" placeholder="힌트 입력">
-            <button onclick="sendHint(4)">힌트 전송</button>
-          </div>
-          <div class="sound-control">
-            <label>
-              <input type="checkbox" class="scream-toggle" data-room="4" checked>
-              비명 소리 활성화
-            </label>
-          </div>
-          <div class="effect-buttons">
-            <button onclick="sendEffect(4, 'flash')">⚡ 깜박임</button>
-            <button onclick="sendEffect(4, 'shake')">💥 흔들림</button>
-            <button onclick="sendEffect(4, 'scream')">😱 비명</button>
-            <button onclick="sendEffect(4, 'bloodDrip')">🩸 피</button>
-          </div>
-          <button class="reset-btn" onclick="resetRoom(4)">🔄 리셋</button>
+
+            <div class="room-card" data-room="2">
+                <h2>크리스마스 악몽</h2>
+                <div class="room-status">
+                    <div class="status-badge inactive">대기중</div>
+                    <div class="team-name">-</div>
+                    <div class="elapsed-time">00:00:00</div>
+                    <div class="penalty-info">패널티: 0회 (+0초)</div>
+                </div>
+                <div class="room-controls">
+                    <div class="password-setting">
+                        <label>비밀번호:</label>
+                        <input type="text" class="password-input" data-room="2" placeholder="비밀번호">
+                        <label>자릿수:</label>
+                        <input type="number" class="digits-input" data-room="2" value="4" min="1" max="10">
+                        <button onclick="setPassword(2)">설정</button>
+                    </div>
+
+                    <div class="announcement-section">
+                        <label>안내 방송:</label>
+                        <div class="announcement-buttons">
+                            <button onclick="playAnnouncement(2, 'start')">🎬 시작 안내</button>
+                            <button onclick="playAnnouncement(2, '10min')">⏰ 10분 전</button>
+                            <button onclick="playAnnouncement(2, '5min')">⏰ 5분 전</button>
+                            <button onclick="playAnnouncement(2, 'end')">🏁 종료 안내</button>
+                            <button onclick="playAnnouncement(2, 'other1')">📢 기타1</button>
+                            <button onclick="playAnnouncement(2, 'other2')">📢 기타2</button>
+                        </div>
+                    </div>
+
+                    <div class="hint-section">
+                        <input type="text" class="hint-input" data-room="2" placeholder="힌트 입력">
+                        <button onclick="sendHint(2)">힌트 전송</button>
+                    </div>
+                    <div class="sound-control">
+                        <label>
+                            <input type="checkbox" class="scream-toggle" data-room="2" checked>
+                            비명 소리 활성화
+                        </label>
+                    </div>
+                    <div class="effect-buttons">
+                        <button onclick="sendEffect(2, 'flash')">⚡ 깜박임</button>
+                        <button onclick="sendEffect(2, 'shake')">💥 흔들림</button>
+                        <button onclick="sendEffect(2, 'scream')">😱 비명</button>
+                        <button onclick="sendEffect(2, 'bloodDrip')">🩸 피</button>
+                    </div>
+                    <button class="reset-btn" onclick="resetRoom(2)">🔄 리셋</button>
+                </div>
+            </div>
+
+            <div class="room-card" data-room="3">
+                <h2>호텔</h2>
+                <div class="room-status">
+                    <div class="status-badge inactive">대기중</div>
+                    <div class="team-name">-</div>
+                    <div class="elapsed-time">00:00:00</div>
+                    <div class="penalty-info">패널티: 0회 (+0초)</div>
+                </div>
+                <div class="room-controls">
+                    <div class="password-setting">
+                        <label>비밀번호:</label>
+                        <input type="text" class="password-input" data-room="3" placeholder="비밀번호">
+                        <label>자릿수:</label>
+                        <input type="number" class="digits-input" data-room="3" value="4" min="1" max="10">
+                        <button onclick="setPassword(3)">설정</button>
+                    </div>
+
+                    <div class="announcement-section">
+                        <label>안내 방송:</label>
+                        <div class="announcement-buttons">
+                            <button onclick="playAnnouncement(3, 'start')">🎬 시작 안내</button>
+                            <button onclick="playAnnouncement(3, '10min')">⏰ 10분 전</button>
+                            <button onclick="playAnnouncement(3, '5min')">⏰ 5분 전</button>
+                            <button onclick="playAnnouncement(3, 'end')">🏁 종료 안내</button>
+                            <button onclick="playAnnouncement(3, 'other1')">📢 기타1</button>
+                            <button onclick="playAnnouncement(3, 'other2')">📢 기타2</button>
+                        </div>
+                    </div>
+
+                    <div class="hint-section">
+                        <input type="text" class="hint-input" data-room="3" placeholder="힌트 입력">
+                        <button onclick="sendHint(3)">힌트 전송</button>
+                    </div>
+                    <div class="sound-control">
+                        <label>
+                            <input type="checkbox" class="scream-toggle" data-room="3" checked>
+                            비명 소리 활성화
+                        </label>
+                    </div>
+                    <div class="effect-buttons">
+                        <button onclick="sendEffect(3, 'flash')">⚡ 깜박임</button>
+                        <button onclick="sendEffect(3, 'shake')">💥 흔들림</button>
+                        <button onclick="sendEffect(3, 'scream')">😱 비명</button>
+                        <button onclick="sendEffect(3, 'bloodDrip')">🩸 피</button>
+                    </div>
+                    <button class="reset-btn" onclick="resetRoom(3)">🔄 리셋</button>
+                </div>
+            </div>
+
+            <div class="room-card" data-room="4">
+                <h2>대기실</h2>
+                <div class="room-status">
+                    <div class="status-badge inactive">대기중</div>
+                    <div class="team-name">-</div>
+                    <div class="elapsed-time">00:00:00</div>
+                    <div class="penalty-info">패널티: 0회 (+0초)</div>
+                </div>
+                <div class="room-controls">
+                    <div class="password-setting">
+                        <label>비밀번호:</label>
+                        <input type="text" class="password-input" data-room="4" placeholder="비밀번호">
+                        <label>자릿수:</label>
+                        <input type="number" class="digits-input" data-room="4" value="4" min="1" max="10">
+                        <button onclick="setPassword(4)">설정</button>
+                    </div>
+
+                    <div class="announcement-section">
+                        <label>안내 방송:</label>
+                        <div class="announcement-buttons">
+                            <button onclick="playAnnouncement(4, 'start')">🎬 시작 안내</button>
+                            <button onclick="playAnnouncement(4, '10min')">⏰ 10분 전</button>
+                            <button onclick="playAnnouncement(4, '5min')">⏰ 5분 전</button>
+                            <button onclick="playAnnouncement(4, 'end')">🏁 종료 안내</button>
+                            <button onclick="playAnnouncement(4, 'other1')">📢 기타1</button>
+                            <button onclick="playAnnouncement(4, 'other2')">📢 기타2</button>
+                        </div>
+                    </div>
+
+                    <div class="hint-section">
+                        <input type="text" class="hint-input" data-room="4" placeholder="힌트 입력">
+                        <button onclick="sendHint(4)">힌트 전송</button>
+                    </div>
+                    <div class="sound-control">
+                        <label>
+                            <input type="checkbox" class="scream-toggle" data-room="4" checked>
+                            비명 소리 활성화
+                        </label>
+                    </div>
+                    <div class="effect-buttons">
+                        <button onclick="sendEffect(4, 'flash')">⚡ 깜박임</button>
+                        <button onclick="sendEffect(4, 'shake')">💥 흔들림</button>
+                        <button onclick="sendEffect(4, 'scream')">😱 비명</button>
+                        <button onclick="sendEffect(4, 'bloodDrip')">🩸 피</button>
+                    </div>
+                    <button class="reset-btn" onclick="resetRoom(4)">🔄 리셋</button>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div class="rankings-section">
+            <h2>🏆 완료 순위</h2>
+            <button class="reset-rankings-btn" onclick="resetRankings()">순위표 초기화</button>
+            <table class="rankings-table">
+                <thead>
+                    <tr>
+                        <th>순위</th>
+                        <th>팀 이름</th>
+                        <th>방</th>
+                        <th>완료 시간</th>
+                        <th>패널티</th>
+                    </tr>
+                </thead>
+                <tbody id="rankings-body">
+                    <tr>
+                        <td colspan="5">아직 완료한 팀이 없습니다</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="hint-notification" class="hint-notification hidden">
+            <span id="hint-notification-text"></span>
+        </div>
+
+        <div id="wrong-notification" class="wrong-notification hidden">
+            <span id="wrong-notification-text"></span>
+        </div>
     </div>
 
-    <div class="rankings-section">
-      <h2>🏆 완료 순위</h2>
-      <button class="reset-rankings-btn" onclick="resetRankings()">순위표 초기화</button>
-      <table class="rankings-table">
-        <thead>
-          <tr>
-            <th>순위</th>
-            <th>팀 이름</th>
-            <th>방</th>
-            <th>완료 시간</th>
-            <th>패널티</th>
-          </tr>
-        </thead>
-        <tbody id="rankings-body">
-          <tr>
-            <td colspan="5">아직 완료한 팀이 없습니다</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div id="hint-notification" class="hint-notification hidden">
-      <span id="hint-notification-text"></span>
-    </div>
-
-    <div id="wrong-notification" class="wrong-notification hidden">
-      <span id="wrong-notification-text"></span>
-    </div>
-  </div>
-
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="admin.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="admin.js"></script>
 </body>
+
 </html>
